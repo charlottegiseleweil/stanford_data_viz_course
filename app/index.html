@@ -1,96 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-		<meta charset="utf-8">
-		<title>CME 161 Data Visualization</title>
 
-		<!-- site dependencies -->
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-		<link href="assets/css/style.css" rel="stylesheet">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Charlotte Gisele Weil Visualization</title>
+    <!-- site dependencies -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://seiyria.com/bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/crossfilter_demo/style.css" rel="stylesheet">
 </head>
+
 <body>
-	<!-- begin wrap -->		
-	<div id="wrap">
-	  
-	  <!-- begin container -->
-		<div class="container">
+    <!-- begin wrap -->
+    <div id="wrap">
+        <!-- begin container -->
+        <div class="container">
+            <!-- begin content -->
+            <div id="content">
+                <!-- begin row -->
+                <div class="row">
+                    <!-- begin header -->
+                    <div class=".col-xs-12 .col-md-8">
+                        <h1>Evaluating the " 25 by 25 " policy</h1>
+                        <h3>Through interactive data visualization &nbsp <small><a href='http://www.sciencedirect.com/science/article/pii/S004016250900105X' target='_blank'>Data source: Bryant and Lempert, 2010</a></small></h3>
 
-			<!-- begin content -->
-			<div id="content">
+                        <p> <i> <small>This visualization is inspired by examples from <a href="https://github.com/dderiso/stanford_data_viz_course"> Dave Deriso's course at Stanford</a>. The libraries <a href='http://seiyria.com/bootstrap-slider/dependencies/js/jquery.min.js' target='_blank'>jquery</a>, <a href='http://seiyria.com/bootstrap-slider/js/bootstrap-slider.js target='_blank'>bootstrap slider</a>, <a href=http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js' target='_blank'>D3</a>, <a href='https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.16/processing.min.js' target='_blank'>processing</a> and <a href='https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js' target='_blank'>crossfilter</a> were used. </small></i></p>
+                        <hr>
+                    </div>
+                    <!-- end header -->
+                    <!-- Example of a section : 
+                    <div class=".col-xs-12 .col-md-8">
+                        <h3>
+                            Title
+                        </h3>
+                        <p>
+                            text <a href="https://github.com/processing-js/processing-js/" target="_blank">link</a>
+                        </p>
+                        <hr>
+                        <canvas id="processing_random_triangle_meshes"></canvas>
+                        <hr>
+                    </div> -->
+                    <!-- begin viz -->
+                    <div class=".col-xs-12 .col-md-8">
+                        <h3>
+                            Exploring the (combination of) inputs leading to the cases where a policy fails to meet its performance goals.
+                        </h3>
+                        <p>
+                            The approach taken in this visualization aims to support the scenario discovery method (<a href="http://www.sciencedirect.com/science/article/pii/S004016250900105X" target="_blank">Thinking inside the box: A participatory, computer-assisted approach to scenario discovery</a>). It aims to point out the scenarios where a policy fails to meet its performance goals, in order to highlight the vulnerabilies of considered policy. </p>
+                        <p> Scenario discovery characterizes such sets by helping users to apply statistical or data- mining algorithms to databases of simulation-model-generated results in order to identify easy-to-interpret combinations of uncertain model input parameters that are highly predictive of these policy-relevant cases. The approach has already proved successful in several high impact policy studies. <a href='http://www.sciencedirect.com/science/article/pii/S004016250900105X' target='_blank'>Bryant and Lempert, 2010</a></p>
+                        <p> This visualization aims to lead to the same result, by allowing the user to select subsets of each input parameters, and viewing the result in policy cost (as number of cases leading to each cost range, cost ranges being the quantiles of total cost ditribution, see histogram below). The considered case involves a proposed U.S. renewable energy standard. 882 cases were generated (through a simulation creating a database to explore all combinations of the 9 uncertain input parameters)
+                        </p>
+                        <hr>
+                        <!-- slider 1-->
+                        <div class="well" style="background-color:#D0D18A"">
+                            Cellulosic cost :&nbsp&nbsp <b>10</b>
+                            <input id="input1_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Cellulosic cost range selected:&nbsp&nbsp <span id="input1_slider_txt"></span>
+                        </div>
+                       
+                        <!-- slider 2-->
+                        <div class="well" style="background-color:#E6D23E"> 
+                            Total biomass :&nbsp&nbsp <b>10</b>
+                            <input id="input2_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Biomass range selection:&nbsp&nbsp <span id="input2_slider_txt"></span>
+                        </div>
+                        
+                        <!-- slider 3-->
+                        <div class="well" style="background-color:#EAEBA3">
+                            Feedstock distribution :&nbsp&nbsp <b>10</b>
+                            <input id="input3_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Feedstock range selection:&nbsp&nbsp <span id="input3_slider_txt"></span>
+                        </div>
+                       
+                        <!-- slider 4-->
+                        <div class="well" style="background-color:#D9DA8B">
+                            Cellulosic yield :&nbsp&nbsp <b>10</b>
+                            <input id="input4_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Cellulosic yield range selection :&nbsp&nbsp <span id="input4_slider_txt"></span>
+                        </div>
+                        
+                        <!-- slider 5-->
+                        <div class="well" style="background-color:#D0D18A">
+                            Oil Elasticity :&nbsp&nbsp <b>10</b>
+                            <input id="input5_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Oil elasticity range selection :&nbsp&nbsp <span id="input5_slider_txt"></span>
+                        </div>
+                        
+                        <!-- slider 6-->
+                        <div class="well" style="background-color:#EEF08A">
+                            Demand elasticity:&nbsp&nbsp <b>10</b>
+                            <input id="input6_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Demand elasticity range selection :&nbsp&nbsp <span id="input6_slider_txt"></span>
+                        </div>
+                        
+                        <!-- slider 7-->
+                        <div class="well" style="background-color:#EAEBA3">
+                            Electricity coproduction :&nbsp&nbsp <b>10</b>
+                            <input id="input7_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Electricity range selection :&nbsp&nbsp <span id="input7_slider_txt"></span>
+                        </div>
+                    
+                        <!-- slider 8-->
+                        <div class="well" style="background-color:#D9DA8B">
+                            Oil supply shift :&nbsp&nbsp <b>10</b>
+                            <input id="input8_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Oil supply shift range selection :&nbsp&nbsp <span id="input8_slider_txt"></span>
+                        </div>
+                        
+                        <!-- slider 9-->
+                        <div class="well" style="background-color:#EAEBA3">
+                            Biomass backstop price :&nbsp&nbsp <b>10</b>
+                            <input id="input9_slider" type="text" /> <b>1000</b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp Biomass price range selection :&nbsp&nbsp <span id="input9_slider_txt"></span>
+                        </div>
+                        <hr>
+<!-- MY PROBLEM IS THE HISTOGRAM (BELOW 2 DIV) IS NOT SHOWING BOOOHOUHOUUUUU
 
-				<!-- begin row -->
-				<div class="row">
+                        <div class="well"  id="appearances_by_quantiles_container">  </div>
+                            <div id="appearances_by_quantiles">                             </div>
 
-					<!-- begin header -->
-					<div class=".col-xs-12 .col-md-8">
-						<h1>Visualization Portfolio of Charlie</h1>
-						<h4><a href='http://web.stanford.edu/~dderiso/cme151/' target='_blank'>CME 161: Data Visualization</a> <small>Spring 2016</small></h4>
-						<hr>
-					</div>
-					<!-- end header -->
 
-					<!-- begin viz 1 -->
-					<div class=".col-xs-12 .col-md-8">
-						<h3>
-							Title
-						</h3>
-
-						<p>
-							text <a href="https://github.com/processing-js/processing-js/" target="_blank">link</a>
-						</p>
-
-						<hr>
-
-						<canvas id="processing_random_triangle_meshes"></canvas>
-						
-						<hr>
-
-					</div>
-					<!-- end viz 1 -->
-
-					<!-- begin viz 2 -->
-					<div class=".col-xs-12 .col-md-8">
-						<h3>
-							Distribution of Wealth Inequality in Developing Nations
-						</h3>
-
-						<p>
-							This visualization shows... The library used is <a href="..." target="_blank">...</a>.
-						</p>
-
-						<hr>
-						
-						<canvas id="some_name"></canvas>
-						
-						<hr>
-
-					</div>
-					<!-- end viz 2 -->
-
-				</div>
-				<!-- end row -->
-
-			</div> 
-			<!-- end content -->
-
-		</div>
-		<!-- end container -->
-
-	</div>
-	<!-- end wrap -->	
-
-	<!-- begin footer -->
-	<div id="footer">
-	  <div class="container">
-			<p class="text-muted credit"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="assets/images/cc_80x15.png" /></a> <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">This Portfolio</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://web.stanford.edu/~dderiso/cme151/" property="cc:attributionName" rel="cc:attributionURL">Your Name</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/dderiso/stanford_data_viz_course" rel="dct:source">https://github.com/dderiso/stanford_data_viz_course</a>.</p>
-	  </div>
-	</div>
-	<!-- end footer -->
-
-	<!-- processing_random_triangle_meshes dependencies -->
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.16/processing.min.js'></script>
-	<script src='assets/js/random_triangle_meshes/random_triangle_meshes.js'></script>
-
+                        </div>
+                        
+                    </div>
+                    <!-- end viz -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end content -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end wrap -->
+    <!-- begin footer -->
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted credit">
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="assets/images/cc_80x15.png" /></a> <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">This Portfolio</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://web.stanford.edu/~dderiso/cme151/" property="cc:attributionName" rel="cc:attributionURL">Charlotte Gisèle Weil</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/dderiso/stanford_data_viz_course" rel="dct:source">https://github.com/dderiso/stanford_data_viz_course</a>.</p>
+        </div>
+    </div>
+    <!-- end footer -->
+    <!-- processing dependencies -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.16/processing.min.js'></script>
+    <!-- <script src='assets/js/random_triangle_meshes/random_triangle_meshes.js'></script> -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js'></script>
+    <script src='http://seiyria.com/bootstrap-slider/dependencies/js/jquery.min.js'></script>
+    <script src='http://seiyria.com/bootstrap-slider/js/bootstrap-slider.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+    <!-- load data -->
+    <script type="text/javascript" src="vassets/js/crossfilter_demo/dataset.js"></script>
+    <!-- run javascript -->
+    <script type="text/javascript" src="assets/js/crossfilter_demo/run.js"></script>
+    
 </body>
+
 </html>
