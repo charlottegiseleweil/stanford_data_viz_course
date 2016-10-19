@@ -313,13 +313,15 @@ d3.json("http://0.0.0.0:5050/data/fuel/", function(error, fuels_dataset) {
         group_9.reduce(reduce_add, reduce_remove, reduce_init);
         group_10.reduce(reduce_add, reduce_remove, reduce_init);
       
+        var test = group_9.sum()
+console.log(group_9.sum())
+
 
         var render_plots = function() {
             // count refers to a specific key specified in reduce_init 
             // and updated in reduce_add and reduce_subtract
             // Modify this for the chart to plot the specified variable on the y-axis
-            hist(group_1.top(Infinity), group_2.top(Infinity),
-        group_3.top(Infinity)
+            hist(group_1.sum(),
                 "appearances_by_quantiles",
                 "count",
                 "Number of datapoints per cost range"
